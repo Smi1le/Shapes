@@ -1,0 +1,38 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  cursor: default;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#btn {
+  background-color: red;
+  position: absolute;
+}
+
+#circle
+{
+  border-radius: 100%;
+  background: black;
+  position: absolute;
+}
+
+#block {
+  background-color: #2200cc;
+  position: absolute;
+}
+
+#brd{
+  border: 10px inset greenyellow;
+  background: #a4e7fc;
+  position: relative;
+}
+
+#scoreTable{
+  position: absolute;
+  font-family: "Arial Black", Times, sans-serif;
+  font-size: 40px;
+  color: #00aadd;
+}
+
