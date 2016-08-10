@@ -10,7 +10,7 @@ goog.scope(function()
      * @constructor
      */
     ispring.Shapes.Shape = goog.defineClass(null, {
-        constructor:function(position, size, type)
+        constructor:function(position, size, type, key)
         {
             /**@private {goog.math.Coordinate}*/
             this._position = position;
@@ -21,14 +21,8 @@ goog.scope(function()
             /**@private {string}*/
             this._type = type;
 
-            /**@type {!Element}*/
-            this._body = goog.dom.createElement(goog.dom.TagName.DIV);
-            this._body.id = this._type;
-            this._body.style.position = "absolute";
-            this._body.style.background = "#98ca6a";
-            goog.style.setPosition(this._body, this._position);
-            goog.style.setSize(this._body, this._size);
-            document.body.appendChild(this._body);
+            /**@private {string}*/
+            this._key = key;
         },
 
         /**
@@ -37,7 +31,20 @@ goog.scope(function()
          */
         setPosition:function(position)
         {
-            goog.style.setPosition(this._body, position);
+            if(this._position == position)
+            {
+                return;
+            }
+            this._position = position;
+        },
+
+        /**
+         * @public
+         * @returns {string}
+         */
+        getType:function()
+        {
+            return this._type;
         },
 
         /**
@@ -47,6 +54,15 @@ goog.scope(function()
         getPosition:function()
         {
             return this._position;
+        },
+
+        /**
+         * @public
+         * @returns {string}
+         */
+        getKey:function()
+        {
+            return this._key;
         }
     })
 });

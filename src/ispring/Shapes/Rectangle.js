@@ -9,9 +9,18 @@ goog.scope(function()
      * @constructor
      */
     ispring.Shapes.Rectangle = goog.defineClass(shape, {
-        constructor:function(position, size, type)
+        constructor:function(position, size, type, key)
         {
-           goog.base(this, position, size, type);
+           goog.base(this, position, size, type, key);
+        },
+
+        /**
+         * @public
+         * @returns {goog.math.Size|*|number}
+         */
+        getSize:function()
+        {
+            return this._size;
         }
     })
 });
