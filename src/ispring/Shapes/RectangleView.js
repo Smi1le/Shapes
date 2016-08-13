@@ -1,18 +1,18 @@
-goog.provide("ispring.Shapes.RectangleView");
+goog.provide("ispring.shapes.RectangleView");
 
-goog.require("ispring.Shapes.ShapeView");
-goog.require("goog.math");
-goog.require("goog.style");
+goog.require("ispring.shapes.ShapeView");
+// goog.require("goog.math");
+// goog.require("goog.style");
 goog.scope(function()
 {
-    var shapeView = ispring.Shapes.ShapeView;
+    var shapeView = ispring.shapes.ShapeView;
     /**
      * @constructor
      */
-    ispring.Shapes.RectangleView = goog.defineClass(shapeView, {
-        constructor:function(pos, size)
+    ispring.shapes.RectangleView = goog.defineClass(shapeView, {
+        constructor:function(key)
         {
-            goog.base(this, pos, size, "rectangle");
+            goog.base(this, "rectangle", key);
         },
 
         /**
@@ -21,8 +21,8 @@ goog.scope(function()
          */
         draw:function()
         {
-            goog.style.setPosition(this._body, this._position);
-            goog.style.setSize(this._body, this._size);
+            // goog.style.setPosition(this._body, this._position);
+            // goog.style.setSize(this._body, this._size);
         }
     })
 });

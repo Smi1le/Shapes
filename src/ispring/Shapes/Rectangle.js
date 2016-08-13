@@ -1,26 +1,17 @@
-goog.provide("ispring.Shapes.Rectangle");
+goog.provide("ispring.shapes.Rectangle");
 
-goog.require("ispring.Shapes.Shape");
+goog.require("ispring.shapes.Shape");
 
 goog.scope(function()
 {
-    var shape = ispring.Shapes.Shape;
+    var shape = ispring.shapes.Shape;
     /**
      * @constructor
      */
-    ispring.Shapes.Rectangle = goog.defineClass(shape, {
-        constructor:function(position, size, type, key)
+    ispring.shapes.Rectangle = goog.defineClass(shape, {
+        constructor:function(position, size)
         {
-           goog.base(this, position, size, type, key);
-        },
-
-        /**
-         * @public
-         * @returns {goog.math.Size|*|number}
-         */
-        getSize:function()
-        {
-            return this._size;
+           goog.base(this, position, size, "rectangle");
         }
     })
 });

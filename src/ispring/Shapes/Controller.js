@@ -1,7 +1,8 @@
-goog.provide("ispring.Shapes.Controller");
+goog.provide("ispring.shapes.Controller");
 
-goog.require("ispring.Shapes.Rectangle");
-goog.require("ispring.Shapes.RectangleView");
+// goog.require("ispring.shapes.Rectangle");
+// goog.require("ispring.shapes.RectangleView");
+goog.require("ispring.shapes.EventType");
 goog.require("goog.dom");
 goog.require("goog.style");
 goog.require("goog.math");
@@ -11,14 +12,19 @@ goog.scope(function()
     /**
      * @constructor
      */
-    ispring.Shapes.Controller = goog.defineClass(null, {
+    ispring.shapes.Controller = goog.defineClass(null, {
         constructor:function(model, leftView)
         {
-            /**@private {ispring.Shapes.ShapesModel}*/
+            /**@private {ispring.shapes.ShapesModel}*/
             this._model = model;
 
-            /**@private {ispring.Shapes.LeftView}*/
+            /**@private {ispring.shapes.LeftView}*/
             this._leftView = leftView;
+
+
+            this._isFigureSelected = false;
+
+            /**@private {!Element}*/
             var btn = goog.dom.createElement(goog.dom.TagName.INPUT);
             btn.id = "btn";
             btn.type = "submit";
@@ -29,8 +35,27 @@ goog.scope(function()
             btn.addEventListener("click", goog.bind(this._createShape, this));
 
             // var event = new Event('click');
-            document.addEventListener('shape added', goog.bind(function (e) {
+            document.addEventListener(ispring.shapes.EventType.SHAPE_ADDED, goog.bind(function (e) {
                 this._leftView.addView(e.detail);
+            }, this), false);
+
+            document.body.addEventListener(goog.events.EventType.MOUSEDOWN, goog.bind(function(e){
+                this._isFigureSelected = true;
+                console.log("|*********************************************|");
+                console.log("window.event.clientX = " + window.event.clientX);
+                console.log("window.event.clientY = " + window.event.clientY);
+                // alert("проверка");
+                console.log("|*********************************************|");
+                this._model.checkBox();
+            }, this), false);
+
+            document.body.addEventListener(goog.events.EventType.MOUSEUP, goog.bind(function(e){
+                this._model.stopMoveTimer();
+            }, this), false);
+
+            document.addEventListener(ispring.shapes.EventType.MOVE, goog.bind(function(e) {
+                console.log("yes");
+                this._leftView.moveShape(e.detail);
             }, this), false);
         },
 

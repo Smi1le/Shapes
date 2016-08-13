@@ -4045,14 +4045,15 @@ goog.addDependency('../../../libs/closure/third_party/closure/goog/mochikit/asyn
 goog.addDependency('../../../libs/closure/third_party/closure/goog/mochikit/async/deferredlist.js', ['goog.async.DeferredList'], ['goog.async.Deferred'], false);
 goog.addDependency('../../../libs/closure/third_party/closure/goog/osapi/osapi.js', ['goog.osapi'], [], false);
 goog.addDependency('../../../libs/closure/third_party/closure/goog/svgpan/svgpan.js', ['svgpan.SvgPan'], ['goog.Disposable', 'goog.events', 'goog.events.EventType', 'goog.events.MouseWheelHandler'], false);
-goog.addDependency('../../../src/ispring/Shapes/Controller.js', ['ispring.Shapes.Controller'], ['goog.dom', 'goog.math', 'goog.style', 'ispring.Shapes.Rectangle', 'ispring.Shapes.RectangleView'], false);
-goog.addDependency('../../../src/ispring/Shapes/LeftView.js', ['ispring.Shapes.LeftView'], ['goog.array', 'goog.dom', 'goog.math', 'ispring.Shapes.Rectangle', 'ispring.Shapes.RectangleView'], false);
-goog.addDependency('../../../src/ispring/Shapes/Rectangle.js', ['ispring.Shapes.Rectangle'], ['ispring.Shapes.Shape'], false);
-goog.addDependency('../../../src/ispring/Shapes/RectangleView.js', ['ispring.Shapes.RectangleView'], ['goog.math', 'goog.style', 'ispring.Shapes.ShapeView'], false);
-goog.addDependency('../../../src/ispring/Shapes/RightView.js', ['ispring.Shapes.RightView'], ['ispring.Shapes.Rectangle'], false);
-goog.addDependency('../../../src/ispring/Shapes/Shape.js', ['ispring.Shapes.Shape'], ['goog.dom', 'goog.math', 'goog.style'], false);
-goog.addDependency('../../../src/ispring/Shapes/ShapeView.js', ['ispring.Shapes.ShapeView'], [], false);
-goog.addDependency('../../../src/ispring/Shapes/ShapesModel.js', ['ispring.Shapes.ShapesModel'], ['goog.array', 'ispring.Shapes.Rectangle'], false);
+goog.addDependency('../../../src/ispring/Shapes/Controller.js', ['ispring.shapes.Controller'], ['goog.dom', 'goog.math', 'goog.style', 'ispring.shapes.EventType'], false);
+goog.addDependency('../../../src/ispring/Shapes/EventType.js', ['ispring.shapes.EventType'], [], false);
+goog.addDependency('../../../src/ispring/Shapes/LeftView.js', ['ispring.shapes.LeftView'], ['goog.array', 'goog.dom', 'goog.math', 'ispring.shapes.RectangleView'], false);
+goog.addDependency('../../../src/ispring/Shapes/Rectangle.js', ['ispring.shapes.Rectangle'], ['ispring.shapes.Shape'], false);
+goog.addDependency('../../../src/ispring/Shapes/RectangleView.js', ['ispring.shapes.RectangleView'], ['ispring.shapes.ShapeView'], false);
+goog.addDependency('../../../src/ispring/Shapes/RightView.js', ['ispring.shapes.RightView'], ['ispring.shapes.Rectangle'], false);
+goog.addDependency('../../../src/ispring/Shapes/Shape.js', ['ispring.shapes.Shape'], ['goog.math'], false);
+goog.addDependency('../../../src/ispring/Shapes/ShapeView.js', ['ispring.shapes.ShapeView'], ['goog.math'], false);
+goog.addDependency('../../../src/ispring/Shapes/ShapesModel.js', ['ispring.shapes.ShapesModel'], ['goog.array', 'goog.math', 'ispring.MyTimer', 'ispring.shapes.EventType', 'ispring.shapes.Rectangle'], false);
 goog.addDependency('../../../src/ispring/game/MyGame.js', ['ispring.game.MyGame'], ['goog.dom', 'goog.events', 'ispring.game.Outline', 'ispring.game.Rectangle', 'ispring.game.Triangle'], false);
 goog.addDependency('../../../src/ispring/game/Outline.js', ['ispring.game.Outline'], ['ispring.game.Shape'], false);
 goog.addDependency('../../../src/ispring/game/Rectangle.js', ['ispring.game.Rectangle'], ['ispring.game.Shape'], false);
@@ -4069,7 +4070,7 @@ goog.addDependency('../../../src/ispring/task2/Music.js', ['ispring.task2.Music'
 goog.addDependency('../../../src/ispring/task2/Obstacles.js', ['ispring.task2.Obstacles'], ['goog.array', 'goog.math', 'ispring.MyTimer', 'ispring.task2.Block'], false);
 goog.addDependency('../../../src/ispring/task2/UserInterface.js', ['ispring.task2.UI'], ['goog.dom', 'goog.math', 'goog.style'], false);
 goog.addDependency('../../../src/ispring/task2/block.js', ['ispring.task2.Block'], ['goog.dom', 'goog.math', 'goog.style'], false);
-goog.addDependency('../main.js', ['Sample', '__tmp.Module0'], ['ispring.Shapes.Controller', 'ispring.Shapes.LeftView', 'ispring.Shapes.RightView', 'ispring.Shapes.ShapesModel'], false);
+goog.addDependency('../main.js', ['Sample', '__tmp.Module0'], ['ispring.shapes.Controller', 'ispring.shapes.LeftView', 'ispring.shapes.ShapesModel'], false);
 
 goog.require('__tmp.Module0');
 goog.define('goog.defineClass.SEAL_CLASS_INSTANCES', false);

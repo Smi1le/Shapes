@@ -1,12 +1,12 @@
-goog.provide("ispring.Shapes.RightView");
+goog.provide("ispring.shapes.RightView");
 
-goog.require("ispring.Shapes.Rectangle");
+goog.require("ispring.shapes.Rectangle");
 goog.scope(function()
 {
     /**
      * @constructor
      */
-    ispring.Shapes.RightView = goog.defineClass(null, {
+    ispring.shapes.RightView = goog.defineClass(null, {
         constructor:function(model)
         {
             this._model = model;
@@ -17,7 +17,7 @@ goog.scope(function()
          */
         createShape:function()
         {
-            var triangle = new ispring.Shapes.Rectangle(new goog.math.Coordinate(document.documentElement.clientWidth / 2 + 200, 200),
+            var triangle = new ispring.shapes.Rectangle(new goog.math.Coordinate(document.documentElement.clientWidth / 2 + 200, 200),
                 new goog.math.Size(200, 200), "type");
             this._model.addShape(triangle);
         },

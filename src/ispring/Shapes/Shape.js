@@ -1,16 +1,14 @@
-goog.provide("ispring.Shapes.Shape");
+goog.provide("ispring.shapes.Shape");
 
 goog.require("goog.math");
-goog.require("goog.style");
-goog.require("goog.dom");
 
 goog.scope(function()
 {
     /**
      * @constructor
      */
-    ispring.Shapes.Shape = goog.defineClass(null, {
-        constructor:function(position, size, type, key)
+    ispring.shapes.Shape = goog.defineClass(null, {
+        constructor:function(position, size, type)
         {
             /**@private {goog.math.Coordinate}*/
             this._position = position;
@@ -21,8 +19,11 @@ goog.scope(function()
             /**@private {string}*/
             this._type = type;
 
-            /**@private {string}*/
-            this._key = key;
+            /**@private {number}*/
+            this._key = goog.getUid(this);
+            // goog.getUid(this);
+
+            
         },
 
         /**
@@ -36,6 +37,14 @@ goog.scope(function()
                 return;
             }
             this._position = position;
+            var event = new CustomEvent(ispring.shapes.EventType.MOVE, {
+                "detail" :{
+                    "type" : this._type,
+                    "key" : this._key,
+                    "position" : this._position,
+                    "size" : this._size
+                }});
+            document.dispatchEvent(event);
         },
 
         /**
@@ -58,11 +67,20 @@ goog.scope(function()
 
         /**
          * @public
-         * @returns {string}
+         * @returns {number}
          */
         getKey:function()
         {
             return this._key;
+        },
+
+        /**
+         * @public
+         * @returns {goog.math.Size|*|number}
+         */
+        getSize:function()
+        {
+            return this._size;
         }
     })
 });
