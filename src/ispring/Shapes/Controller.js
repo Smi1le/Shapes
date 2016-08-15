@@ -5,6 +5,7 @@ goog.provide("ispring.shapes.Controller");
 goog.require("ispring.shapes.EventType");
 goog.require("goog.dom");
 goog.require("goog.style");
+goog.require("goog.events");
 goog.require("goog.math");
 
 goog.scope(function()
@@ -34,29 +35,30 @@ goog.scope(function()
             document.body.appendChild(btn);
             btn.addEventListener("click", goog.bind(this._createShape, this));
 
-            // var event = new Event('click');
             document.addEventListener(ispring.shapes.EventType.SHAPE_ADDED, goog.bind(function (e) {
                 this._leftView.addView(e.detail);
             }, this), false);
 
-            document.body.addEventListener(goog.events.EventType.MOUSEDOWN, goog.bind(function(e){
-                this._isFigureSelected = true;
-                console.log("|*********************************************|");
-                console.log("window.event.clientX = " + window.event.clientX);
-                console.log("window.event.clientY = " + window.event.clientY);
-                // alert("проверка");
-                console.log("|*********************************************|");
-                this._model.checkBox();
-            }, this), false);
+            var lv = this._leftView.getBody();
 
-            document.body.addEventListener(goog.events.EventType.MOUSEUP, goog.bind(function(e){
-                this._model.stopMoveTimer();
-            }, this), false);
+            lv.onmousedown = goog.bind(function(e){
+                var key = this._model.getShapeUId(e);
+                var shapeView = this._leftView.getViewShape(key);
 
-            document.addEventListener(ispring.shapes.EventType.MOVE, goog.bind(function(e) {
-                console.log("yes");
-                this._leftView.moveShape(e.detail);
-            }, this), false);
+                var shiftX = e.pageX - shapeView.getPosition().x;
+                var shiftY = e.pageY - shapeView.getPosition().y;
+
+                document.onmousemove = goog.bind(function(e){
+                    shapeView.setPosition(new goog.math.Coordinate(e.pageX - shiftX, e.pageY - shiftY));
+                    this._leftView.draw();
+                }, this);
+
+                lv.onmouseup = goog.bind(function(e){
+                    this._model.getShape(key).setPosition(shapeView.getPosition());
+                    document.onmousemove = null;
+                    document.onmouseup = null;
+                }, this);
+            }, this);
         },
 
         /** 
@@ -65,7 +67,6 @@ goog.scope(function()
         _createShape:function()
         {
             this._model.addShape();
-            // this._model.addShape(triangle);
         },
     })
 });

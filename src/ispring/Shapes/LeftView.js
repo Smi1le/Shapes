@@ -35,6 +35,15 @@ goog.scope(function()
 
         /**
          * @public
+         * @returns {!Element|*}
+         */
+        getBody:function()
+        {
+            return this._body;
+        },
+
+        /**
+         * @public
          * @param detail
          */
         addView:function(detail)
@@ -45,7 +54,7 @@ goog.scope(function()
                 rectView.setPosition(new goog.math.Coordinate(500, 300));
             }
             goog.array.insert(this._viewList, rectView);
-            this._draw();
+            this.draw();
         },
 
 
@@ -60,13 +69,28 @@ goog.scope(function()
                     shape.setSize(detail.size);
                 }
             }
-            this._draw();
+            this.draw();
         },
 
         /**
-         * @private
+         * @public
+         * @param key
+         * @returns {number|*|goog.math.Coordinate|Array|goog.positioning.AbstractPosition|!goog.math.Coordinate}
          */
-        _draw:function()
+        getViewShape:function(key)
+        {
+            for (var i = 0; i != this._viewList.length; ++i) {
+                if (key == this._viewList[i].getKey())
+                {
+                    return this._viewList[i];
+                }
+            }
+        },
+
+        /**
+         * @public
+         */
+        draw:function()
         {
             var background = "";
             for(var i = 0; i != this._viewList.length; ++i)

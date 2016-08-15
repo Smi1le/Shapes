@@ -2,7 +2,7 @@ goog.provide("ispring.shapes.ShapesModel");
 
 goog.require("ispring.shapes.Rectangle");
 goog.require("ispring.shapes.EventType");
-goog.require("ispring.MyTimer");
+// goog.require("ispring.MyTimer");
 goog.require("goog.array");
 goog.require("goog.math");
 
@@ -18,7 +18,7 @@ goog.scope(function()
             this._data = [];
 
             /**@private {ispring.MyTimer}*/
-            this._moveTimer = new ispring.MyTimer(goog.bind(this._moveShape, this), 100);
+            // this._moveTimer = new ispring.MyTimer(goog.bind(this._moveShape, this), 100);
 
             /**@private {number}*/
             this._uidMoveShape = 0;
@@ -42,35 +42,47 @@ goog.scope(function()
 
         /**
          * @public
+         * @param e
+         * @returns {*}
          */
-        checkBox:function()
+        getShapeUId:function(e)
         {
             // var viewPos = document.getElementById("leftView").body.pageXOffset;
             // console.log('document.getElementById("leftView").body.pageXOffset = ' + document.getElementById("leftView").body.pageXOffset);
-            var pos = new goog.math.Coordinate(window.event.clientX, window.event.clientY);
+            // var pos = new goog.math.Coordinate(window.event.clientX, window.event.clientY);
+
             for(var i = 0; i != this._data.length; ++i)
             {
                 var shape = this._data[i];
                 var position = shape.getPosition();
                 var size = shape.getSize();
-                if ((position.x <= pos.x && pos.x <= position.x + size.width) &&
-                        position.y <= pos.y && pos.y <= position.y + size.height)
+                console.log("position.x = " + position.x);
+                console.log("position.x + size.width = " + (position.x + size.width));
+                console.log("e.pageX = " + e.pageX)
+                console.log("position.y = " + position.y)
+                console.log("position.y + size.height = " + position.y + size.height)
+                console.log("e.pageY = " + e.pageY)
+                if ((position.x <= e.pageX && e.pageX <= position.x + size.width) &&
+                        position.y <= e.pageY && e.pageY <= position.y + size.height)
                 {
-                    this._uidMoveShape = i;
-                    this._moveTimer.start();
-                    break;
+                    return shape.getKey();
                 }
             }
         },
 
         /**
-         * @private
+         * @public
+         * @param key
+         * @returns {*}
          */
-        _moveShape:function()
-        {
-            var pos = new goog.math.Coordinate(window.event.clientX, window.event.clientY);
-            // var newPos = new goog.math.Coordinate(window.event.clientX, window.event.clientY);
-            this._data[this._uidMoveShape].setPosition(pos);
+        getShape:function(key) {
+            for (var i = 0; i != this._data.length; ++i)
+            {
+                if (key == this._data[i].getKey())
+                {
+                    return this._data[i];
+                }
+            }
             
             
         },
@@ -80,7 +92,7 @@ goog.scope(function()
          */
         stopMoveTimer:function()
         {
-            this._moveTimer.stop();
+            // this._moveTimer.stop();
         }
     })
 });
