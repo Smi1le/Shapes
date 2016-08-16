@@ -17,9 +17,6 @@ goog.scope(function()
             /**@private {Array}*/
             this._data = [];
 
-            /**@private {ispring.MyTimer}*/
-            // this._moveTimer = new ispring.MyTimer(goog.bind(this._moveShape, this), 100);
-
             /**@private {number}*/
             this._uidMoveShape = 0;
         },
@@ -36,7 +33,6 @@ goog.scope(function()
                     "type" : shape.getType(),
                     "key" : shape.getKey()
                 }});
-            console.log("this._data.length = " + this._data.length);
             document.dispatchEvent(event);
         },
 
@@ -47,21 +43,11 @@ goog.scope(function()
          */
         getShapeUId:function(e)
         {
-            // var viewPos = document.getElementById("leftView").body.pageXOffset;
-            // console.log('document.getElementById("leftView").body.pageXOffset = ' + document.getElementById("leftView").body.pageXOffset);
-            // var pos = new goog.math.Coordinate(window.event.clientX, window.event.clientY);
-
             for(var i = 0; i != this._data.length; ++i)
             {
                 var shape = this._data[i];
                 var position = shape.getPosition();
                 var size = shape.getSize();
-                console.log("position.x = " + position.x);
-                console.log("position.x + size.width = " + (position.x + size.width));
-                console.log("e.pageX = " + e.pageX)
-                console.log("position.y = " + position.y)
-                console.log("position.y + size.height = " + position.y + size.height)
-                console.log("e.pageY = " + e.pageY)
                 if ((position.x <= e.pageX && e.pageX <= position.x + size.width) &&
                         position.y <= e.pageY && e.pageY <= position.y + size.height)
                 {
@@ -75,7 +61,7 @@ goog.scope(function()
          * @param key
          * @returns {*}
          */
-        getShape:function(key) {
+        getShapeByIndex:function(key) {
             for (var i = 0; i != this._data.length; ++i)
             {
                 if (key == this._data[i].getKey())
@@ -89,10 +75,29 @@ goog.scope(function()
 
         /**
          * @public
+         * @param amount
          */
-        stopMoveTimer:function()
+        removeShapesAtIndex:function(amount)
         {
-            // this._moveTimer.stop();
+            this._data.splice(amount);
+        },
+
+        /**
+         * @public
+         * @returns {Array}
+         */
+        getData:function()
+        {
+            return this._data.slice();
+        },
+
+        /**
+         * @public
+         * @param data
+         */
+        setData:function(data)
+        {
+            this._data = data;
         }
     })
 });

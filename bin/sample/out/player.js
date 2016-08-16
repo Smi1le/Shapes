@@ -4045,8 +4045,10 @@ goog.addDependency('../../../libs/closure/third_party/closure/goog/mochikit/asyn
 goog.addDependency('../../../libs/closure/third_party/closure/goog/mochikit/async/deferredlist.js', ['goog.async.DeferredList'], ['goog.async.Deferred'], false);
 goog.addDependency('../../../libs/closure/third_party/closure/goog/osapi/osapi.js', ['goog.osapi'], [], false);
 goog.addDependency('../../../libs/closure/third_party/closure/goog/svgpan/svgpan.js', ['svgpan.SvgPan'], ['goog.Disposable', 'goog.events', 'goog.events.EventType', 'goog.events.MouseWheelHandler'], false);
-goog.addDependency('../../../src/ispring/Shapes/Controller.js', ['ispring.shapes.Controller'], ['goog.dom', 'goog.events', 'goog.math', 'goog.style', 'ispring.shapes.EventType'], false);
+goog.addDependency('../../../src/ispring/Shapes/Controller.js', ['ispring.shapes.Controller'], ['goog.dom', 'goog.math', 'goog.style', 'ispring.shapes.EventType', 'ispring.shapes.History'], false);
 goog.addDependency('../../../src/ispring/Shapes/EventType.js', ['ispring.shapes.EventType'], [], false);
+goog.addDependency('../../../src/ispring/Shapes/History.js', ['ispring.shapes.History'], ['goog.array', 'ispring.shapes.HistoryCommand'], false);
+goog.addDependency('../../../src/ispring/Shapes/HistoryCommand.js', ['ispring.shapes.HistoryCommand'], ['goog.array', 'goog.math'], false);
 goog.addDependency('../../../src/ispring/Shapes/LeftView.js', ['ispring.shapes.LeftView'], ['goog.array', 'goog.dom', 'goog.math', 'ispring.shapes.RectangleView'], false);
 goog.addDependency('../../../src/ispring/Shapes/Rectangle.js', ['ispring.shapes.Rectangle'], ['ispring.shapes.Shape'], false);
 goog.addDependency('../../../src/ispring/Shapes/RectangleView.js', ['ispring.shapes.RectangleView'], ['ispring.shapes.ShapeView'], false);

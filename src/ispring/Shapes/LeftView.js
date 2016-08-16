@@ -49,10 +49,6 @@ goog.scope(function()
         addView:function(detail)
         {
             var rectView = new ispring.shapes.RectangleView(detail.key);
-            if (this._viewList.length == 1)
-            {
-                rectView.setPosition(new goog.math.Coordinate(500, 300));
-            }
             goog.array.insert(this._viewList, rectView);
             this.draw();
         },
@@ -77,7 +73,7 @@ goog.scope(function()
          * @param key
          * @returns {number|*|goog.math.Coordinate|Array|goog.positioning.AbstractPosition|!goog.math.Coordinate}
          */
-        getViewShape:function(key)
+        getShapeByIndex:function(key)
         {
             for (var i = 0; i != this._viewList.length; ++i) {
                 if (key == this._viewList[i].getKey())
@@ -110,6 +106,24 @@ goog.scope(function()
 
             this._body.style.background = background;
             this._body.style.backgroundRepeat = "no-repeat";
+        },
+
+        /**
+         * @public
+         * @param amount
+         */
+        removeShapesAtIndex:function(amount)
+        {
+            this._viewList.splice(amount);
+        },
+
+        redraw:function(e) {
+            for (var i = 0; i != this._viewList.length; ++i) {
+                var shape = this._viewList[i];
+                shape.setPosition(new goog.math.Coordinate(e.data[i].positionX, e.data[i].positionY));
+                shape.setSize(new goog.math.Size(e.data[i].width, e.data[i].height));
+            }
+            this.draw();
         },
 
         statics:{

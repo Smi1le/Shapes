@@ -37,14 +37,14 @@ goog.scope(function()
                 return;
             }
             this._position = position;
-            var event = new CustomEvent(ispring.shapes.EventType.MOVE, {
+            /*var event = new CustomEvent(ispring.shapes.EventType.MOVE, {
                 "detail" :{
                     "type" : this._type,
                     "key" : this._key,
                     "position" : this._position,
                     "size" : this._size
                 }});
-            document.dispatchEvent(event);
+            document.dispatchEvent(event);*/
         },
 
         /**
@@ -81,6 +81,32 @@ goog.scope(function()
         getSize:function()
         {
             return this._size;
+        },
+
+        /**
+         * @public
+         * @param size
+         */
+        setSize:function(size)
+        {
+            if (size == this._size)
+            {
+                return;
+            }
+            this._size = size;
+        },
+
+        /**
+         * @public
+         * @param key
+         */
+        setKey:function(key)
+        {
+            if (key == this._key)
+            {
+                return;
+            }
+            this._key = key;
         }
     })
 });
