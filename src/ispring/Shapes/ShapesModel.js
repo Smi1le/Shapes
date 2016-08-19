@@ -1,10 +1,10 @@
 goog.provide("ispring.shapes.ShapesModel");
 
-goog.require("ispring.shapes.Rectangle");
+// goog.require("ispring.shapes.Rectangle");
 goog.require("ispring.shapes.EventType");
 // goog.require("ispring.MyTimer");
 goog.require("goog.array");
-goog.require("goog.math");
+// goog.require("goog.math");
 
 goog.scope(function()
 {
@@ -23,10 +23,10 @@ goog.scope(function()
 
         /**
          * @public
+         * @param shape
          */
-        addShape:function()
+        addShape:function(shape)
         {
-            var shape = new ispring.shapes.Rectangle(new goog.math.Coordinate(200, 200), new goog.math.Size(150, 150));
             goog.array.insert(this._data, shape);
             var event = new CustomEvent(ispring.shapes.EventType.SHAPE_ADDED, {
                 "detail" :{
@@ -36,6 +36,17 @@ goog.scope(function()
             document.dispatchEvent(event);
         },
 
+        removeShape:function(shape)
+        {
+            for (var i = 0; i != this._data.length; ++i)
+            {
+                if (shape == this._data[i])
+                {
+                    this._data.splice(i--, 1);
+                    break;
+                }
+            }
+        },
         /**
          * @public
          * @param e
