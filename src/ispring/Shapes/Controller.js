@@ -72,7 +72,7 @@ goog.scope(function()
             var lv = this._leftView.getBody();
 
 
-            document.onmousedown = goog.bind(function(e){
+            lv.onmousedown = goog.bind(function(e){
                 var key = this._model.getShapeUId(e);
                 var shapeView = this._leftView.getShapeByIndex(key);
                 if (shapeView != undefined) {
@@ -85,10 +85,11 @@ goog.scope(function()
                     document.onmousemove = goog.bind(function (e) {
                         shapeView.setPosition(new goog.math.Coordinate(e.pageX - shiftX, e.pageY - shiftY));
                         this._leftView.setPositionContour(new goog.math.Coordinate(e.pageX - shiftX, e.pageY - shiftY));
+                        this._leftView.setPositionResizePoints(shapeView);
                         this._leftView.draw();
                     }, this);
 
-                    document.onmouseup = goog.bind(function (e) {
+                    lv.onmouseup = goog.bind(function (e) {
                         var newPos = shapeView.getPosition();
                         var shapeModel = this._model.getShapeByIndex(key);
                         var command = new ispring.shapes.MoveShapeCommand(shapeModel, newPos.x, newPos.y);

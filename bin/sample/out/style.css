@@ -35,3 +35,30 @@ body {
   font-size: 40px;
   color: #00aadd;
 }
+
+#contour {
+  position : absolute;
+  outline : 4px ridge #00FF00;
+  z-index: -1;
+}
+
+#leftView{
+  position: absolute;
+  outline : 10px groove #77aaff;
+  z-index: 1;
+}
+
+#button{
+  background: linear-gradient(115deg, #AAFFAA, #00ffff, #00FF00, blue);
+  width: 120px;
+  height: 60px;
+  position: absolute;
+  border-radius: 13em 0.5em/1em 0.5em;
+}
+
+#resizePoint{
+  background: #00ffff;
+  position: absolute;
+  border-radius: 100%;
+  z-index: 2;
+}
