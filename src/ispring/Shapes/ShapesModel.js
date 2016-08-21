@@ -1,10 +1,7 @@
 goog.provide("ispring.shapes.ShapesModel");
 
-// goog.require("ispring.shapes.Rectangle");
 goog.require("ispring.shapes.EventType");
-// goog.require("ispring.MyTimer");
 goog.require("goog.array");
-// goog.require("goog.math");
 
 goog.scope(function()
 {
@@ -80,8 +77,6 @@ goog.scope(function()
                     return this._data[i];
                 }
             }
-            
-            
         },
 
         /**
@@ -91,24 +86,6 @@ goog.scope(function()
         removeShapesAtIndex:function(amount)
         {
             this._data.splice(amount);
-        },
-
-        /**
-         * @public
-         * @returns {Array}
-         */
-        getData:function()
-        {
-            return this._data.slice();
-        },
-
-        /**
-         * @public
-         * @param data
-         */
-        setData:function(data)
-        {
-            this._data = data;
         }
     })
 });

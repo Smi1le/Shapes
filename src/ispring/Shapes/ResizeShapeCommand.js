@@ -1,6 +1,6 @@
-goog.provide("ispring.shapes.MoveShapeCommand");
+goog.provide("ispring.shapes.ResizeShapeCommand");
 
-goog.require("goog.array");
+
 goog.require("goog.math");
 
 goog.scope(function()
@@ -8,11 +8,17 @@ goog.scope(function()
     /**
      * @constructor
      */
-    ispring.shapes.MoveShapeCommand = goog.defineClass(null, {
-        constructor:function(shape, x, y)
+    ispring.shapes.ResizeShapeCommand = goog.defineClass(null, {
+        constructor:function(shape, pos, size)
         {
             /**@private {?ispring.shapes.Rectangle}*/
             this._shape = shape;
+
+            /**@private {number}*/
+            this._oldWidth = shape.getSize().width;
+
+            /**@private {number}*/
+            this._oldHeight = shape.getSize().height;
 
             /**@private {number}*/
             this._oldX = shape.getPosition().x;
@@ -21,12 +27,17 @@ goog.scope(function()
             this._oldY = shape.getPosition().y;
 
             /**@private {number}*/
-            this._newX = x;
+            this._newWidth = size.width;
 
             /**@private {number}*/
-            this._newY = y;
+            this._newHeight = size.height;
 
-            /**@private {CustomEvent}*/
+            /**@private {number}*/
+            this._newX = pos.x;
+
+            /**@private {number}*/
+            this._newY = pos.y;
+
             this._changeEventRedraw = new CustomEvent(ispring.shapes.EventType.REDRAW, {
                 "detail":{
                     "shape" : this._shape
@@ -41,15 +52,18 @@ goog.scope(function()
         execute:function()
         {
             this._shape.setPosition(new goog.math.Coordinate(this._newX, this._newY));
+            this._shape.setSize(new goog.math.Size(this._newWidth, this._newHeight));
             document.dispatchEvent(this._changeEventRedraw);
         },
-        
+
+
+
         /**
          * @public
          */
-        unExecute:function()
-        {
+        unExecute:function(){
             this._shape.setPosition(new goog.math.Coordinate(this._oldX, this._oldY));
+            this._shape.setSize(new goog.math.Size(this._oldWidth, this._oldHeight));
             document.dispatchEvent(this._changeEventRedraw);
         }
     })

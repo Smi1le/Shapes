@@ -21,7 +21,6 @@ goog.scope(function()
 
             /**@private {number}*/
             this._key = goog.getUid(this);
-            // goog.getUid(this);
 
             
         },
@@ -37,14 +36,6 @@ goog.scope(function()
                 return;
             }
             this._position = position;
-            /*var event = new CustomEvent(ispring.shapes.EventType.MOVE, {
-                "detail" :{
-                    "type" : this._type,
-                    "key" : this._key,
-                    "position" : this._position,
-                    "size" : this._size
-                }});
-            document.dispatchEvent(event);*/
         },
 
         /**

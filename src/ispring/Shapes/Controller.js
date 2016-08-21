@@ -1,13 +1,12 @@
 goog.provide("ispring.shapes.Controller");
 
-// goog.require("ispring.shapes.Rectangle");
 goog.require("ispring.shapes.History");
 goog.require("ispring.shapes.AddShapeCommand");
 goog.require("ispring.shapes.MoveShapeCommand");
+goog.require("ispring.shapes.ResizeShapeCommand");
 goog.require("ispring.shapes.EventType");
 goog.require("goog.dom");
 goog.require("goog.style");
-// goog.require("goog.events");
 goog.require("goog.math");
 
 goog.scope(function()
@@ -60,6 +59,13 @@ goog.scope(function()
                 this._leftView.addView(e.detail);
             }, this), false);
 
+            document.addEventListener(ispring.shapes.EventType.RESIZE, goog.bind(function (e) {
+                // this._leftView.addView(e.detail);
+                var view = e.detail.shapeView;
+                var shape = this._model.getShapeByIndex(view.getKey());
+                var command = new ispring.shapes.ResizeShapeCommand(shape, view.getPosition(), view.getSize());
+                this._history.addCommand(command);
+            }, this), false);
 
             document.addEventListener(ispring.shapes.EventType.REDRAW, goog.bind(function (e) {
                 this._leftView.redraw(e.detail);
@@ -118,6 +124,7 @@ goog.scope(function()
          */
         _undo:function()
         {
+            this._leftView.deselectedShape();
             this._history.undo();
         },
 
@@ -126,9 +133,8 @@ goog.scope(function()
          */
         _redo:function()
         {
+            this._leftView.deselectedShape();
             this._history.redo();
         }
-
-
     })
 });

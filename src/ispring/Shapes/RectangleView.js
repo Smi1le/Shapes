@@ -1,8 +1,6 @@
 goog.provide("ispring.shapes.RectangleView");
 
 goog.require("ispring.shapes.ShapeView");
-// goog.require("goog.math");
-// goog.require("goog.style");
 goog.scope(function()
 {
     var shapeView = ispring.shapes.ShapeView;

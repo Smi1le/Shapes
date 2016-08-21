@@ -1,8 +1,5 @@
 goog.provide("ispring.shapes.History");
 
-
-goog.require("ispring.shapes.AddShapeCommand");
-// goog.require("goog.math");
 goog.require("goog.array");
 
 goog.scope(function()

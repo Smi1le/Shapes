@@ -1,7 +1,5 @@
 goog.provide("ispring.shapes.AddShapeCommand");
 
-
-// goog.require("goog.json");
 goog.require("ispring.shapes.Rectangle");
 goog.require("goog.array");
 goog.require("goog.math");
@@ -39,7 +37,6 @@ goog.scope(function()
             
             var event = new Event(ispring.shapes.EventType.REMOVE);
             document.dispatchEvent(event);
-
         }
     })
 });

@@ -1,6 +1,5 @@
 goog.provide("ispring.shapes.LeftView");
 
-// goog.require("ispring.shapes.Rectangle");
 goog.require("ispring.shapes.RectangleView");
 goog.require("goog.math");
 goog.require("goog.dom");
@@ -75,24 +74,32 @@ goog.scope(function()
                         shape = this._viewList[i];
                     }
                 }
-                document.onmousemove = goog.bind(function(e){
-                    var oldPos = shape.getPosition();
-                    var shiftX = oldPos.x - e.pageX;
-                    var shiftY = oldPos.y - e.pageY;
-                    var width = shape.getSize().width + shiftX;
-                    var height = shape.getSize().height + shiftY;
-                    shape.setPosition(new goog.math.Coordinate(e.pageX, e.pageY));
-                    shape.setSize(new goog.math.Size(width, height));
-                    goog.style.setPosition(this._contour, new goog.math.Coordinate(e.pageX, e.pageY));
-                    goog.style.setSize(this._contour, new goog.math.Size(width, height));
-                    this.setPositionResizePoints(shape);
-                    this.draw();
-                }, this);
+                if(shape != undefined) {
+                    document.onmousemove = goog.bind(function (e) {
+                        var oldPos = shape.getPosition();
+                        var shiftX = oldPos.x - e.pageX;
+                        var shiftY = oldPos.y - e.pageY;
+                        var width = shape.getSize().width + shiftX;
+                        var height = shape.getSize().height + shiftY;
+                        shape.setPosition(new goog.math.Coordinate(e.pageX, e.pageY));
+                        shape.setSize(new goog.math.Size(width, height));
+                        goog.style.setPosition(this._contour, new goog.math.Coordinate(e.pageX, e.pageY));
+                        goog.style.setSize(this._contour, new goog.math.Size(width, height));
+                        this.setPositionResizePoints(shape);
+                        this.draw();
+                    }, this);
 
-                this._resizePointsList[0].onmouseup = goog.bind(function (e) {
-                    document.onmousemove = null;
-                    this._resizePointsList[0].onmouseup = null;
-                }, this);
+                    this._resizePointsList[0].onmouseup = goog.bind(function (e) {
+                        var event = new CustomEvent(ispring.shapes.EventType.RESIZE, {
+                            "detail": {
+                                "shapeView": shape
+                            }
+                        });
+                        document.dispatchEvent(event);
+                        document.onmousemove = null;
+                        this._resizePointsList[0].onmouseup = null;
+                    }, this);
+                }
             }, this);
         },
 
@@ -122,6 +129,12 @@ goog.scope(function()
                 }, this);
 
                 this._resizePointsList[1].onmouseup = goog.bind(function (e) {
+                    var event = new CustomEvent(ispring.shapes.EventType.RESIZE, {
+                        "detail": {
+                            "shapeView": shape
+                        }
+                    });
+                    document.dispatchEvent(event);
                     document.onmousemove = null;
                     this._resizePointsList[1].onmouseup = null;
                 }, this);
@@ -154,6 +167,12 @@ goog.scope(function()
                 }, this);
 
                 this._resizePointsList[2].onmouseup = goog.bind(function (e) {
+                    var event = new CustomEvent(ispring.shapes.EventType.RESIZE, {
+                        "detail": {
+                            "shapeView": shape
+                        }
+                    });
+                    document.dispatchEvent(event);
                     document.onmousemove = null;
                     this._resizePointsList[2].onmouseup = null;
                 }, this);
@@ -186,6 +205,12 @@ goog.scope(function()
                 }, this);
 
                 this._resizePointsList[3].onmouseup = goog.bind(function (e) {
+                    var event = new CustomEvent(ispring.shapes.EventType.RESIZE, {
+                        "detail": {
+                            "shapeView": shape
+                        }
+                    });
+                    document.dispatchEvent(event);
                     document.onmousemove = null;
                     this._resizePointsList[3].onmouseup = null;
                 }, this);
@@ -268,7 +293,6 @@ goog.scope(function()
                 }
 
             }
-
             this._body.style.background = background;
             this._body.style.backgroundRepeat = "no-repeat";
         },
@@ -288,6 +312,7 @@ goog.scope(function()
                 if (e.shape.getKey() == this._viewList[i].getKey())
                 {
                     this._viewList[i].setPosition(e.shape.getPosition());
+                    this._viewList[i].setSize(e.shape.getSize());
                 }
             }
             this.draw();
