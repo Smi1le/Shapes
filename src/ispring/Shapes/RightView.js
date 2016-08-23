@@ -40,8 +40,15 @@ goog.scope(function()
          */
         addView:function(detail)
         {
-            var rectView = new ispring.shapes.RectangleView(detail.key);
-            goog.array.insert(this._viewList, rectView);
+            var view;
+            if (detail.type == "rectangle") {
+                view = new ispring.shapes.RectangleView(detail.key);
+            }
+            else if(detail.type == "circle")
+            {
+                view = new ispring.shapes.CircleView(detail.key);
+            }
+            goog.array.insert(this._viewList, view);
             this.draw();
         },
 
@@ -69,11 +76,26 @@ goog.scope(function()
             for(var i = 0; i != this._viewList.length; ++i)
             {
                 var view = this._viewList[i];
-                var position = (view.getPosition().x - ispring.shapes.LeftView.INDENT) + "px " +
-                    (view.getPosition().y - ispring.shapes.LeftView.TOP) + "px";
-                var size = view.getSize().width + "px " + view.getSize().height + "px";
-                background += "linear-gradient(-45deg, #ba3e23, #f7941e) " + position + " / " + size;
-
+                var position = null;
+                var size = null;
+                if (view.getType() == "rectangle") {
+                    position = (view.getPosition().x - ispring.shapes.LeftView.INDENT) + "px " +
+                        (view.getPosition().y - ispring.shapes.LeftView.TOP) + "px";
+                    size = view.getSize().width + "px " + view.getSize().height + "px";
+                    background += "linear-gradient(-45deg, #ba3e23, #f7941e) " + position + " / " + size;
+                }
+                else if (view.getType() == "circle")
+                {
+                    position = (view.getPosition().x - ispring.shapes.LeftView.INDENT - this._width / 2 + view.getSize().width / 2) + "px " +
+                        (view.getPosition().y - ispring.shapes.LeftView.TOP - this._height / 2 + view.getSize().height / 2) + "px";
+                    background += "radial-gradient(circle closest-side, " + " #333 " +  view.getRadius() + "px, white 1px, white 5px, transparent 6px)"
+                        + position;
+                }
+                // position - передает центральные координаты
+                // #333 10px - задает цвет и радиус шарика
+                // Остальное - для отрисовки некоего контура, чтобы лучше отрисовывало
+                // background += "radial-gradient(circle closest-side, " + " #333 10px, white 11px, white 30px) "
+                //     + position;
                 if (i + 1 != this._viewList.length)
                 {
                     background += ", ";

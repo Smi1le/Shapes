@@ -4045,7 +4045,9 @@ goog.addDependency('../../../libs/closure/third_party/closure/goog/mochikit/asyn
 goog.addDependency('../../../libs/closure/third_party/closure/goog/mochikit/async/deferredlist.js', ['goog.async.DeferredList'], ['goog.async.Deferred'], false);
 goog.addDependency('../../../libs/closure/third_party/closure/goog/osapi/osapi.js', ['goog.osapi'], [], false);
 goog.addDependency('../../../libs/closure/third_party/closure/goog/svgpan/svgpan.js', ['svgpan.SvgPan'], ['goog.Disposable', 'goog.events', 'goog.events.EventType', 'goog.events.MouseWheelHandler'], false);
-goog.addDependency('../../../src/ispring/Shapes/AddShapeCommand.js', ['ispring.shapes.AddShapeCommand'], ['goog.array', 'goog.math', 'ispring.shapes.Rectangle'], false);
+goog.addDependency('../../../src/ispring/Shapes/AddShapeCommand.js', ['ispring.shapes.AddShapeCommand'], ['goog.array', 'goog.math', 'ispring.shapes.Circle', 'ispring.shapes.Rectangle'], false);
+goog.addDependency('../../../src/ispring/Shapes/Circle.js', ['ispring.shapes.Circle'], ['goog.math', 'ispring.shapes.Shape'], false);
+goog.addDependency('../../../src/ispring/Shapes/CircleView.js', ['ispring.shapes.CircleView'], ['ispring.shapes.ShapeView'], false);
 goog.addDependency('../../../src/ispring/Shapes/Controller.js', ['ispring.shapes.Controller'], ['goog.dom', 'goog.math', 'goog.style', 'ispring.shapes.AddShapeCommand', 'ispring.shapes.EventType', 'ispring.shapes.History', 'ispring.shapes.MoveShapeCommand', 'ispring.shapes.ResizeShapeCommand'], false);
 goog.addDependency('../../../src/ispring/Shapes/EventType.js', ['ispring.shapes.EventType'], [], false);
 goog.addDependency('../../../src/ispring/Shapes/History.js', ['ispring.shapes.History'], ['goog.array'], false);

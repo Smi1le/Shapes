@@ -58,6 +58,15 @@ goog.scope(function()
 
         /**
          * @public
+         * @returns {string}
+         */
+        getType:function()
+        {
+            return this._type;
+        },
+
+        /**
+         * @public
          * @param pos
          */
         setPosition:function(pos)

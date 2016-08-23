@@ -38,7 +38,15 @@ goog.scope(function()
             btn.value = "Add rect";
             goog.style.setPosition(btn, new goog.math.Coordinate(300, 0));
             document.body.appendChild(btn);
-            btn.addEventListener("click", goog.bind(this._createShape, this));
+            btn.addEventListener("click", goog.bind(this._createRectangle, this));
+
+            var btn2 = goog.dom.createElement(goog.dom.TagName.INPUT);
+            btn2.id = "button";
+            btn2.type = "submit";
+            btn2.value = "Add circle";
+            goog.style.setPosition(btn2, new goog.math.Coordinate(420, 0));
+            document.body.appendChild(btn2);
+            btn2.addEventListener("click", goog.bind(this._createCircle, this));
 
             /**@private {!Element}*/
             var undoButton = goog.dom.createElement(goog.dom.TagName.INPUT);
@@ -133,12 +141,26 @@ goog.scope(function()
             }, this);
         },
 
-        /** 
+        /**
          * @private
          */
-        _createShape:function()
+        _createCircle:function()
         {
-            var command = new ispring.shapes.AddShapeCommand(this._model);
+            this._createShape("circle");
+        },
+
+        _createRectangle:function()
+        {
+            this._createShape("rectangle");
+        },
+
+        /** 
+         * @private
+         * @param type
+         */
+        _createShape:function(type)
+        {
+            var command = new ispring.shapes.AddShapeCommand(this._model, type);
             this._history.addCommand(command);
         },
 

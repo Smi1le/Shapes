@@ -13,9 +13,6 @@ goog.scope(function()
         {
             /**@private {Array}*/
             this._data = [];
-
-            /**@private {number}*/
-            this._uidMoveShape = 0;
         },
 
         /**
