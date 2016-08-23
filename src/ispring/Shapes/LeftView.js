@@ -30,10 +30,13 @@ goog.scope(function()
             /**@private {number}*/
             this._height = document.documentElement.clientHeight - ispring.shapes.LeftView.TOP - ispring.shapes.LeftView.INDENT;
 
+            /**@private {goog.math.Coordinate}*/
+            this._position = new goog.math.Coordinate(10, 100);
+
             /**@private {!Element}*/
             this._body = goog.dom.createElement(goog.dom.TagName.DIV);
             this._body.id = "leftView";
-            goog.style.setPosition(this._body, new goog.math.Coordinate(10, 100));
+            goog.style.setPosition(this._body, this._position);
             goog.style.setSize(this._body, new goog.math.Size(this._width, this._height));
             document.body.appendChild(this._body);
 
@@ -44,10 +47,15 @@ goog.scope(function()
             goog.style.setSize(this._contour, ispring.shapes.LeftView.START_SIZE);
             document.body.appendChild(this._contour);
             
-            for (var i = 0; i != 4; ++i)
+            for (var i = 0; i != 8; ++i)
             {
                 this._resizePointsList[i] = goog.dom.createElement(goog.dom.TagName.DIV);
-                this._resizePointsList[i].id = "resizePoint";
+                if (i < 4) {
+                    this._resizePointsList[i].id = "cornerResizePoint";
+                }
+                else {
+                    this._resizePointsList[i].id = "resizePoint";
+                }
                 goog.style.setPosition(this._resizePointsList[i], ispring.shapes.LeftView.START_POINT);
                 goog.style.setSize(this._resizePointsList[i], ispring.shapes.LeftView.START_SIZE);
                 document.body.appendChild(this._resizePointsList[i]);
@@ -62,6 +70,10 @@ goog.scope(function()
             this._settingSecondPointResizing();
             this._settingThirdPointResizing();
             this._settingFourthPointResizing();
+            this._settingFifthPointResizing();
+            this._settingSixthPointResizing();
+            this._settingSeventhPointResizing();
+            this._settingEighthPointResizing();
         },
 
         /**@private*/
@@ -81,12 +93,21 @@ goog.scope(function()
                         var shiftY = oldPos.y - e.pageY;
                         var width = shape.getSize().width + shiftX;
                         var height = shape.getSize().height + shiftY;
-                        shape.setPosition(new goog.math.Coordinate(e.pageX, e.pageY));
-                        shape.setSize(new goog.math.Size(width, height));
-                        goog.style.setPosition(this._contour, new goog.math.Coordinate(e.pageX, e.pageY));
-                        goog.style.setSize(this._contour, new goog.math.Size(width, height));
-                        this.setPositionResizePoints(shape);
-                        this.draw();
+                        var pos = new goog.math.Coordinate(e.pageX, e.pageY);
+                        if (this.checkOutputAbroadForResize(pos)) {
+                            shape.setPosition(pos);
+                            shape.setSize(new goog.math.Size(width, height));
+                            goog.style.setPosition(this._contour, new goog.math.Coordinate(e.pageX, e.pageY));
+                            goog.style.setSize(this._contour, new goog.math.Size(width, height));
+                            this.setPositionResizePoints(shape);
+                            var event = new CustomEvent(ispring.shapes.EventType.RESIZE_RIGHT_VIEW, {
+                                "detail": {
+                                    "shape": shape
+                                }
+                            });
+                            document.dispatchEvent(event);
+                            this.draw();
+                        }
                     }, this);
 
                     this._resizePointsList[0].onmouseup = goog.bind(function (e) {
@@ -120,12 +141,21 @@ goog.scope(function()
                     var shiftY = oldPos.y - e.pageY;
                     var width = shape.getSize().width - shiftX;
                     var height = shape.getSize().height + shiftY;
-                    shape.setPosition(new goog.math.Coordinate(shape.getPosition().x, e.pageY));
-                    shape.setSize(new goog.math.Size(width, height));
-                    goog.style.setPosition(this._contour, new goog.math.Coordinate(shape.getPosition().x, e.pageY));
-                    goog.style.setSize(this._contour, new goog.math.Size(width, height));
-                    this.setPositionResizePoints(shape);
-                    this.draw();
+                    var pos = new goog.math.Coordinate(e.pageX, e.pageY);
+                    if (this.checkOutputAbroadForResize(pos)) {
+                        shape.setPosition(new goog.math.Coordinate(shape.getPosition().x, e.pageY));
+                        shape.setSize(new goog.math.Size(width, height));
+                        goog.style.setPosition(this._contour, new goog.math.Coordinate(shape.getPosition().x, e.pageY));
+                        goog.style.setSize(this._contour, new goog.math.Size(width, height));
+                        this.setPositionResizePoints(shape);
+                        var event = new CustomEvent(ispring.shapes.EventType.RESIZE_RIGHT_VIEW, {
+                            "detail": {
+                                "shape": shape
+                            }
+                        });
+                        document.dispatchEvent(event);
+                        this.draw();
+                    }
                 }, this);
 
                 this._resizePointsList[1].onmouseup = goog.bind(function (e) {
@@ -158,12 +188,21 @@ goog.scope(function()
                     var shiftY = oldPos.y - e.pageY;
                     var width = shape.getSize().width - shiftX;
                     var height = shape.getSize().height - shiftY;
-                    shape.setPosition(new goog.math.Coordinate(shape.getPosition().x, shape.getPosition().y));
-                    shape.setSize(new goog.math.Size(width, height));
-                    goog.style.setPosition(this._contour, new goog.math.Coordinate(shape.getPosition().x, shape.getPosition().y));
-                    goog.style.setSize(this._contour, new goog.math.Size(width, height));
-                    this.setPositionResizePoints(shape);
-                    this.draw();
+                    var pos = new goog.math.Coordinate(e.pageX, e.pageY);
+                    if (this.checkOutputAbroadForResize(pos)) {
+                        shape.setPosition(new goog.math.Coordinate(shape.getPosition().x, shape.getPosition().y));
+                        shape.setSize(new goog.math.Size(width, height));
+                        goog.style.setPosition(this._contour, new goog.math.Coordinate(shape.getPosition().x, shape.getPosition().y));
+                        goog.style.setSize(this._contour, new goog.math.Size(width, height));
+                        this.setPositionResizePoints(shape);
+                        var event = new CustomEvent(ispring.shapes.EventType.RESIZE_RIGHT_VIEW, {
+                            "detail": {
+                                "shape": shape
+                            }
+                        });
+                        document.dispatchEvent(event);
+                        this.draw();
+                    }
                 }, this);
 
                 this._resizePointsList[2].onmouseup = goog.bind(function (e) {
@@ -196,12 +235,21 @@ goog.scope(function()
                     var shiftY = oldPos.y - e.pageY;
                     var width = shape.getSize().width + shiftX;
                     var height = shape.getSize().height - shiftY;
-                    shape.setPosition(new goog.math.Coordinate(e.pageX, shape.getPosition().y));
-                    shape.setSize(new goog.math.Size(width, height));
-                    goog.style.setPosition(this._contour, new goog.math.Coordinate(e.pageX, shape.getPosition().y));
-                    goog.style.setSize(this._contour, new goog.math.Size(width, height));
-                    this.setPositionResizePoints(shape);
-                    this.draw();
+                    var pos = new goog.math.Coordinate(e.pageX, e.pageY);
+                    if (this.checkOutputAbroadForResize(pos)) {
+                        shape.setPosition(new goog.math.Coordinate(e.pageX, shape.getPosition().y));
+                        shape.setSize(new goog.math.Size(width, height));
+                        goog.style.setPosition(this._contour, new goog.math.Coordinate(e.pageX, shape.getPosition().y));
+                        goog.style.setSize(this._contour, new goog.math.Size(width, height));
+                        this.setPositionResizePoints(shape);
+                        var event = new CustomEvent(ispring.shapes.EventType.RESIZE_RIGHT_VIEW, {
+                            "detail": {
+                                "shape": shape
+                            }
+                        });
+                        document.dispatchEvent(event);
+                        this.draw();
+                    }
                 }, this);
 
                 this._resizePointsList[3].onmouseup = goog.bind(function (e) {
@@ -213,6 +261,183 @@ goog.scope(function()
                     document.dispatchEvent(event);
                     document.onmousemove = null;
                     this._resizePointsList[3].onmouseup = null;
+                }, this);
+            }, this);
+        },
+
+        _settingFifthPointResizing:function()
+        {
+            this._resizePointsList[4].onmousedown = goog.bind(function(e){
+                var shape = null;
+                for (var i = 0; i != this._viewList.length; ++i) {
+                    if (this._viewList[i].getKey() == this._numberVariableShape) {
+                        shape = this._viewList[i];
+                    }
+                }
+                if(shape != undefined) {
+                    document.onmousemove = goog.bind(function (e) {
+                        var oldPos = shape.getPosition();
+                        var shiftY = oldPos.y - e.pageY;
+                        var height = shape.getSize().height + shiftY;
+                        var pos = new goog.math.Coordinate(e.pageX, e.pageY);
+                        if (this.checkOutputAbroadForResize(pos)) {
+                            shape.setPosition(new goog.math.Coordinate(oldPos.x, e.pageY));
+                            shape.setSize(new goog.math.Size(shape.getSize().width, height));
+                            goog.style.setPosition(this._contour, new goog.math.Coordinate(oldPos.x, e.pageY));
+                            goog.style.setSize(this._contour, new goog.math.Size(shape.getSize().width, height));
+                            this.setPositionResizePoints(shape);
+                            var event = new CustomEvent(ispring.shapes.EventType.RESIZE_RIGHT_VIEW, {
+                                "detail": {
+                                    "shape": shape
+                                }
+                            });
+                            document.dispatchEvent(event);
+                            this.draw();
+                        }
+                    }, this);
+
+                    this._resizePointsList[4].onmouseup = goog.bind(function (e) {
+                        var event = new CustomEvent(ispring.shapes.EventType.RESIZE, {
+                            "detail": {
+                                "shapeView": shape
+                            }
+                        });
+                        document.dispatchEvent(event);
+                        document.onmousemove = null;
+                        this._resizePointsList[4].onmouseup = null;
+                    }, this);
+                }
+            }, this);
+        },
+
+        _settingSixthPointResizing:function()
+        {
+            this._resizePointsList[5].onmousedown = goog.bind(function(e){
+                var shape = null;
+                for (var i = 0; i != this._viewList.length; ++i) {
+                    if (this._viewList[i].getKey() == this._numberVariableShape) {
+                        shape = this._viewList[i];
+                    }
+                }
+                if(shape != undefined) {
+                    document.onmousemove = goog.bind(function (e) {
+                        var oldPos = new goog.math.Coordinate(shape.getPosition().x + shape.getSize().width,
+                            shape.getPosition().y);
+                        var shiftX = oldPos.x - e.pageX;
+                        var width = shape.getSize().width - shiftX;
+                        var pos = new goog.math.Coordinate(e.pageX, e.pageY);
+                        if (this.checkOutputAbroadForResize(pos)) {
+                            shape.setSize(new goog.math.Size(width, shape.getSize().height));
+                            goog.style.setSize(this._contour, new goog.math.Size(width, shape.getSize().height));
+                            this.setPositionResizePoints(shape);
+                            var event = new CustomEvent(ispring.shapes.EventType.RESIZE_RIGHT_VIEW, {
+                                "detail": {
+                                    "shape": shape
+                                }
+                            });
+                            document.dispatchEvent(event);
+                            this.draw();
+                        }
+                    }, this);
+
+                    this._resizePointsList[5].onmouseup = goog.bind(function (e) {
+                        var event = new CustomEvent(ispring.shapes.EventType.RESIZE, {
+                            "detail": {
+                                "shapeView": shape
+                            }
+                        });
+                        document.dispatchEvent(event);
+                        document.onmousemove = null;
+                        this._resizePointsList[5].onmouseup = null;
+                    }, this);
+                }
+            }, this);
+        },
+
+        /**@private*/
+        _settingSeventhPointResizing:function()
+        {
+            this._resizePointsList[6].onmousedown = goog.bind(function(e){
+                var shape = null;
+                for (var i = 0; i != this._viewList.length; ++i) {
+                    if (this._viewList[i].getKey() == this._numberVariableShape) {
+                        shape = this._viewList[i];
+                    }
+                }
+                document.onmousemove = goog.bind(function(e){
+                    var oldPos = new goog.math.Coordinate(shape.getPosition().x + shape.getSize().width,
+                        shape.getPosition().y + shape.getSize().height);
+                    var shiftY = oldPos.y - e.pageY;
+                    var height = shape.getSize().height - shiftY;
+                    var pos = new goog.math.Coordinate(e.pageX, e.pageY);
+                    if (this.checkOutputAbroadForResize(pos)) {
+                        shape.setSize(new goog.math.Size(shape.getSize().width, height));
+                        goog.style.setSize(this._contour, new goog.math.Size(shape.getSize().width, height));
+                        this.setPositionResizePoints(shape);
+                        var event = new CustomEvent(ispring.shapes.EventType.RESIZE_RIGHT_VIEW, {
+                            "detail": {
+                                "shape": shape
+                            }
+                        });
+                        document.dispatchEvent(event);
+                        this.draw();
+                    }
+                }, this);
+
+                this._resizePointsList[6].onmouseup = goog.bind(function (e) {
+                    var event = new CustomEvent(ispring.shapes.EventType.RESIZE, {
+                        "detail": {
+                            "shapeView": shape
+                        }
+                    });
+                    document.dispatchEvent(event);
+                    document.onmousemove = null;
+                    this._resizePointsList[6].onmouseup = null;
+                }, this);
+            }, this);
+        },
+
+        /**@private*/
+        _settingEighthPointResizing:function()
+        {
+            this._resizePointsList[7].onmousedown = goog.bind(function(e){
+                var shape = null;
+                for (var i = 0; i != this._viewList.length; ++i) {
+                    if (this._viewList[i].getKey() == this._numberVariableShape) {
+                        shape = this._viewList[i];
+                    }
+                }
+                document.onmousemove = goog.bind(function(e){
+                    var oldPos = new goog.math.Coordinate(shape.getPosition().x,
+                        shape.getPosition().y + shape.getSize().height);
+                    var shiftX = oldPos.x - e.pageX;
+                    var width = shape.getSize().width + shiftX;
+                    var pos = new goog.math.Coordinate(e.pageX, e.pageY);
+                    if (this.checkOutputAbroadForResize(pos)) {
+                        shape.setPosition(new goog.math.Coordinate(e.pageX, shape.getPosition().y));
+                        shape.setSize(new goog.math.Size(width, shape.getSize().height));
+                        goog.style.setPosition(this._contour, new goog.math.Coordinate(e.pageX, shape.getPosition().y));
+                        goog.style.setSize(this._contour, new goog.math.Size(width, shape.getSize().height));
+                        this.setPositionResizePoints(shape);
+                        var event = new CustomEvent(ispring.shapes.EventType.RESIZE_RIGHT_VIEW, {
+                            "detail": {
+                                "shape": shape
+                            }
+                        });
+                        document.dispatchEvent(event);
+                        this.draw();
+                    }
+                }, this);
+
+                this._resizePointsList[7].onmouseup = goog.bind(function (e) {
+                    var event = new CustomEvent(ispring.shapes.EventType.RESIZE, {
+                        "detail": {
+                            "shapeView": shape
+                        }
+                    });
+                    document.dispatchEvent(event);
+                    document.onmousemove = null;
+                    this._resizePointsList[7].onmouseup = null;
                 }, this);
             }, this);
         },
@@ -318,6 +543,20 @@ goog.scope(function()
             this.draw();
         },
 
+        checkOutputAbroad:function(position, shapeSize)
+        {
+            return ((position.x >= this._position.x) && (position.x + shapeSize.width <= this._position.x + this._width) &&
+            (position.y >= this._position.y) && (position.y + shapeSize.height <= this._position.y + this._height));
+
+        },
+
+        checkOutputAbroadForResize:function(position)
+        {
+            return ((position.x >= this._position.x) && (position.x <= this._position.x + this._width) &&
+            (position.y >= this._position.y) && (position.y <= this._position.y + this._height));
+
+        },
+
         chooseShape:function(shape)
         {
             this._isShapeSelected = true;
@@ -343,7 +582,7 @@ goog.scope(function()
         {
             goog.style.setPosition(this._contour, ispring.shapes.LeftView.START_POINT);
             goog.style.setSize(this._contour, ispring.shapes.LeftView.START_SIZE);
-            for (var i = 0; i != 4; ++i)
+            for (var i = 0; i != this._resizePointsList.length; ++i)
             {
                 goog.style.setPosition(this._resizePointsList[i], ispring.shapes.LeftView.START_POINT);
             }
@@ -366,6 +605,7 @@ goog.scope(function()
         setPositionResizePoints:function(shape)
         {
             var size = ispring.shapes.LeftView.SIZE_RESIZE_POINT;
+            var shapeSize = shape.getSize();
             goog.style.setPosition(this._resizePointsList[0], new goog.math.Coordinate(shape.getPosition().x - size.width / 2,
                 shape.getPosition().y - size.height / 2));
             goog.style.setPosition(this._resizePointsList[1], new goog.math.Coordinate(shape.getPosition().x +
@@ -374,6 +614,14 @@ goog.scope(function()
                 shape.getSize().width - size.width / 2, shape.getPosition().y + shape.getSize().height - size.height / 2));
             goog.style.setPosition(this._resizePointsList[3], new goog.math.Coordinate(shape.getPosition().x - size.width / 2,
                 shape.getPosition().y + shape.getSize().height - size.height / 2));
+            goog.style.setPosition(this._resizePointsList[4], new goog.math.Coordinate(shape.getPosition().x - size.width / 2 + shapeSize.width / 2,
+                shape.getPosition().y - size.height / 2));
+            goog.style.setPosition(this._resizePointsList[5], new goog.math.Coordinate(shape.getPosition().x - size.width / 2 + shapeSize.width,
+                shape.getPosition().y - size.height / 2 + shapeSize.height / 2));
+            goog.style.setPosition(this._resizePointsList[6], new goog.math.Coordinate(shape.getPosition().x - size.width / 2 + shapeSize.width / 2,
+                shape.getPosition().y - size.height / 2 + shapeSize.height));
+            goog.style.setPosition(this._resizePointsList[7], new goog.math.Coordinate(shape.getPosition().x - size.width / 2,
+                shape.getPosition().y - size.height / 2 + shapeSize.height / 2));
         },
 
         statics:{

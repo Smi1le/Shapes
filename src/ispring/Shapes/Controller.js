@@ -15,13 +15,16 @@ goog.scope(function()
      * @constructor
      */
     ispring.shapes.Controller = goog.defineClass(null, {
-        constructor:function(model, leftView)
+        constructor:function(model, leftView, rightView)
         {
             /**@private {ispring.shapes.ShapesModel}*/
             this._model = model;
 
             /**@private {ispring.shapes.LeftView}*/
             this._leftView = leftView;
+
+            /**@private {ispring.shapes.RightView}*/
+            this._rightView = rightView;
 
             /**@private {ispring.shapes.History}*/
             this._history = new ispring.shapes.History();
@@ -57,8 +60,13 @@ goog.scope(function()
 
             document.addEventListener(ispring.shapes.EventType.SHAPE_ADDED, goog.bind(function (e) {
                 this._leftView.addView(e.detail);
+                this._rightView.addView(e.detail);
             }, this), false);
-
+            
+            document.addEventListener(ispring.shapes.EventType.RESIZE_RIGHT_VIEW, goog.bind(function (e) {
+                this._rightView.resizeShape(e.detail.shape);
+            }, this), false);
+            
             document.addEventListener(ispring.shapes.EventType.RESIZE, goog.bind(function (e) {
                 // this._leftView.addView(e.detail);
                 var view = e.detail.shapeView;
@@ -69,10 +77,12 @@ goog.scope(function()
 
             document.addEventListener(ispring.shapes.EventType.REDRAW, goog.bind(function (e) {
                 this._leftView.redraw(e.detail);
+                this._rightView.redraw(e.detail);
             }, this), false);
 
             document.addEventListener(ispring.shapes.EventType.REMOVE, goog.bind(function (e) {
                 this._leftView.removeLastShape();
+                this._rightView.removeLastShape();
             }, this), false);
 
             var lv = this._leftView.getBody();
@@ -80,26 +90,39 @@ goog.scope(function()
 
             lv.onmousedown = goog.bind(function(e){
                 var key = this._model.getShapeUId(e);
-                var shapeView = this._leftView.getShapeByIndex(key);
-                if (shapeView != undefined) {
+                var shapeLeftView = this._leftView.getShapeByIndex(key);
+                var shapeRightView = this._rightView.getShapeByIndex(key);
+                if (shapeLeftView != undefined) {
 
-                    this._leftView.chooseShape(shapeView);
+                    this._leftView.chooseShape(shapeLeftView);
 
-                    var shiftX = e.pageX - shapeView.getPosition().x;
-                    var shiftY = e.pageY - shapeView.getPosition().y;
+                    var shiftX = e.pageX - shapeLeftView.getPosition().x;
+                    var shiftY = e.pageY - shapeLeftView.getPosition().y;
+
+                    var oldPos = new goog.math.Coordinate(shapeLeftView.getPosition().x, shapeLeftView.getPosition().y);
 
                     document.onmousemove = goog.bind(function (e) {
-                        shapeView.setPosition(new goog.math.Coordinate(e.pageX - shiftX, e.pageY - shiftY));
-                        this._leftView.setPositionContour(new goog.math.Coordinate(e.pageX - shiftX, e.pageY - shiftY));
-                        this._leftView.setPositionResizePoints(shapeView);
-                        this._leftView.draw();
+                        var pos = new goog.math.Coordinate(e.pageX - shiftX, e.pageY - shiftY);
+                        if (this._leftView.checkOutputAbroad(pos, shapeLeftView.getSize()))
+                        {
+                            shapeLeftView.setPosition(pos);
+                            shapeRightView.setPosition(pos);
+                            this._leftView.setPositionContour(pos);
+                            this._leftView.setPositionResizePoints(shapeLeftView);
+                            this._leftView.draw();
+                            this._rightView.draw();
+                        }
                     }, this);
 
                     lv.onmouseup = goog.bind(function (e) {
-                        var newPos = shapeView.getPosition();
-                        var shapeModel = this._model.getShapeByIndex(key);
-                        var command = new ispring.shapes.MoveShapeCommand(shapeModel, newPos.x, newPos.y);
-                        this._history.addCommand(command);
+                        var newPos = shapeLeftView.getPosition();
+                        if (oldPos.x != newPos.x || oldPos.y != newPos.y)
+                        {
+                            oldPos = newPos;
+                            var shapeModel = this._model.getShapeByIndex(key);
+                            var command = new ispring.shapes.MoveShapeCommand(shapeModel, newPos.x, newPos.y);
+                            this._history.addCommand(command);
+                        }
                         document.onmousemove = null;
                         document.onmouseup = null;
                     }, this);

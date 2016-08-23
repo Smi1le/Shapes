@@ -7,7 +7,8 @@ ispring.shapes.EventType = {
     MOVE : "move",
     REDRAW : "redraw",
     REMOVE : "remove",
-    RESIZE : "resize"
+    RESIZE : "resize",
+    RESIZE_RIGHT_VIEW : "resize right view"
 };
 
 

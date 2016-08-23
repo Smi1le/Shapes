@@ -48,17 +48,29 @@ body {
   z-index: 1;
 }
 
+#rightView{
+  position: absolute;
+  outline : 10px groove #FF0000;
+  z-index: 1;
+}
+
 #button{
   background: linear-gradient(115deg, #AAFFAA, #00ffff, #00FF00, blue);
   width: 120px;
   height: 60px;
   position: absolute;
-  border-radius: 13em 0.5em/1em 0.5em;
+  border-radius: 10px;
 }
 
-#resizePoint{
+#cornerResizePoint{
   background: #00ffff;
   position: absolute;
   border-radius: 100%;
+  z-index: 2;
+}
+
+#resizePoint{
+  background : #00FF00;
+  position: absolute;
   z-index: 2;
 }
