@@ -86,16 +86,11 @@ goog.scope(function()
                 }
                 else if (view.getType() == "circle")
                 {
-                    position = (view.getPosition().x - ispring.shapes.LeftView.INDENT - this._width / 2 + view.getSize().width / 2) + "px " +
-                        (view.getPosition().y - ispring.shapes.LeftView.TOP - this._height / 2 + view.getSize().height / 2) + "px";
-                    background += "radial-gradient(circle closest-side, " + " #333 " +  view.getRadius() + "px, white 1px, white 5px, transparent 6px)"
-                        + position;
+                    position = (view.getPosition().x - ispring.shapes.LeftView.INDENT) + "px " +
+                        (view.getPosition().y - ispring.shapes.LeftView.TOP) + "px";
+                    background += "radial-gradient(ellipse closest-side at " + "" +  view.getSize().width / 2 + "px "
+                        + view.getSize().height / 2 + "px, blue, blue, blue, blue, blue, transparent)" + position;
                 }
-                // position - передает центральные координаты
-                // #333 10px - задает цвет и радиус шарика
-                // Остальное - для отрисовки некоего контура, чтобы лучше отрисовывало
-                // background += "radial-gradient(circle closest-side, " + " #333 10px, white 11px, white 30px) "
-                //     + position;
                 if (i + 1 != this._viewList.length)
                 {
                     background += ", ";
@@ -108,10 +103,35 @@ goog.scope(function()
 
         /**
          * @public
+         * @param shape
          */
-        removeLastShape:function()
+        chooseShape:function(shape)
         {
-            this._viewList.splice(this._viewList.length - 1);
+            this._viewList.splice(0, 0, shape);
+            for(var i = 1; i != this._viewList.length; ++i)
+            {
+                if(shape.getKey() == this._viewList[i].getKey())
+                {
+                    this._viewList.splice(i, 1);
+                    break;
+                }
+            }
+            this.draw();
+        },
+
+        /**
+         * @public
+         * @param shape
+         */
+        removeShape:function(shape) {
+            for (var i = 0; i != this._viewList.length; ++i)
+            {
+                if (shape.getKey() == this._viewList[i].getKey())
+                {
+                    this._viewList.splice(i, 1);
+                    break;
+                }
+            }
             this.draw();
         },
 

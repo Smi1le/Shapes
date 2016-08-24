@@ -13,14 +13,6 @@ goog.scope(function()
             goog.base(this, "circle", key);
 
             this._radius = this._size.width / 2;
-        },
-
-        /**
-         * @public
-         */
-        getRadius:function()
-        {
-            return this._radius;
         }
     })
 });

@@ -42,7 +42,11 @@ goog.scope(function()
         unExecute:function(){
             this._model.removeShape(this._newShape);
             
-            var event = new Event(ispring.shapes.EventType.REMOVE);
+            var event = new CustomEvent(ispring.shapes.EventType.REMOVE, {
+                "detail" : {
+                    "shape" : this._newShape
+                }
+            });
             document.dispatchEvent(event);
         }
     })

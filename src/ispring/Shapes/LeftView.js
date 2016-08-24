@@ -5,8 +5,7 @@ goog.require("ispring.shapes.CircleView");
 goog.require("goog.math");
 goog.require("goog.dom");
 goog.require("goog.array");
-goog.scope(function()
-{
+goog.scope(function() {
     /**
      * @constructor
      */
@@ -48,8 +47,7 @@ goog.scope(function()
             goog.style.setSize(this._contour, ispring.shapes.LeftView.START_SIZE);
             document.body.appendChild(this._contour);
             
-            for (var i = 0; i != 8; ++i)
-            {
+            for (var i = 0; i != 8; ++i) {
                 this._resizePointsList[i] = goog.dom.createElement(goog.dom.TagName.DIV);
                 if (i < 4) {
                     this._resizePointsList[i].id = "cornerResizePoint";
@@ -65,8 +63,7 @@ goog.scope(function()
             this._settingPointsResizing();
         },
 
-        _settingPointsResizing:function()
-        {
+        _settingPointsResizing:function() {
             this._settingFirstPointResizing();
             this._settingSecondPointResizing();
             this._settingThirdPointResizing();
@@ -78,8 +75,7 @@ goog.scope(function()
         },
 
         /**@private*/
-        _settingFirstPointResizing:function()
-        {
+        _settingFirstPointResizing:function() {
             this._resizePointsList[0].onmousedown = goog.bind(function(e){
                 var shape = null;
                 for (var i = 0; i != this._viewList.length; ++i) {
@@ -101,12 +97,6 @@ goog.scope(function()
                             goog.style.setPosition(this._contour, new goog.math.Coordinate(e.pageX, e.pageY));
                             goog.style.setSize(this._contour, new goog.math.Size(width, height));
                             this.setPositionResizePoints(shape);
-                            var event = new CustomEvent(ispring.shapes.EventType.RESIZE_RIGHT_VIEW, {
-                                "detail": {
-                                    "shape": shape
-                                }
-                            });
-                            document.dispatchEvent(event);
                             this.draw();
                         }
                     }, this);
@@ -126,8 +116,7 @@ goog.scope(function()
         },
 
         /**@private*/
-        _settingSecondPointResizing:function()
-        {
+        _settingSecondPointResizing:function() {
             this._resizePointsList[1].onmousedown = goog.bind(function(e){
                 var shape = null;
                 for (var i = 0; i != this._viewList.length; ++i) {
@@ -149,12 +138,6 @@ goog.scope(function()
                         goog.style.setPosition(this._contour, new goog.math.Coordinate(shape.getPosition().x, e.pageY));
                         goog.style.setSize(this._contour, new goog.math.Size(width, height));
                         this.setPositionResizePoints(shape);
-                        var event = new CustomEvent(ispring.shapes.EventType.RESIZE_RIGHT_VIEW, {
-                            "detail": {
-                                "shape": shape
-                            }
-                        });
-                        document.dispatchEvent(event);
                         this.draw();
                     }
                 }, this);
@@ -173,8 +156,7 @@ goog.scope(function()
         },
 
         /**@private*/
-        _settingThirdPointResizing:function()
-        {
+        _settingThirdPointResizing:function() {
             this._resizePointsList[2].onmousedown = goog.bind(function(e){
                 var shape = null;
                 for (var i = 0; i != this._viewList.length; ++i) {
@@ -196,12 +178,6 @@ goog.scope(function()
                         goog.style.setPosition(this._contour, new goog.math.Coordinate(shape.getPosition().x, shape.getPosition().y));
                         goog.style.setSize(this._contour, new goog.math.Size(width, height));
                         this.setPositionResizePoints(shape);
-                        var event = new CustomEvent(ispring.shapes.EventType.RESIZE_RIGHT_VIEW, {
-                            "detail": {
-                                "shape": shape
-                            }
-                        });
-                        document.dispatchEvent(event);
                         this.draw();
                     }
                 }, this);
@@ -220,8 +196,7 @@ goog.scope(function()
         },
 
         /**@private*/
-        _settingFourthPointResizing:function()
-        {
+        _settingFourthPointResizing:function() {
             this._resizePointsList[3].onmousedown = goog.bind(function(e){
                 var shape = null;
                 for (var i = 0; i != this._viewList.length; ++i) {
@@ -243,12 +218,6 @@ goog.scope(function()
                         goog.style.setPosition(this._contour, new goog.math.Coordinate(e.pageX, shape.getPosition().y));
                         goog.style.setSize(this._contour, new goog.math.Size(width, height));
                         this.setPositionResizePoints(shape);
-                        var event = new CustomEvent(ispring.shapes.EventType.RESIZE_RIGHT_VIEW, {
-                            "detail": {
-                                "shape": shape
-                            }
-                        });
-                        document.dispatchEvent(event);
                         this.draw();
                     }
                 }, this);
@@ -266,8 +235,7 @@ goog.scope(function()
             }, this);
         },
 
-        _settingFifthPointResizing:function()
-        {
+        _settingFifthPointResizing:function() {
             this._resizePointsList[4].onmousedown = goog.bind(function(e){
                 var shape = null;
                 for (var i = 0; i != this._viewList.length; ++i) {
@@ -287,12 +255,6 @@ goog.scope(function()
                             goog.style.setPosition(this._contour, new goog.math.Coordinate(oldPos.x, e.pageY));
                             goog.style.setSize(this._contour, new goog.math.Size(shape.getSize().width, height));
                             this.setPositionResizePoints(shape);
-                            var event = new CustomEvent(ispring.shapes.EventType.RESIZE_RIGHT_VIEW, {
-                                "detail": {
-                                    "shape": shape
-                                }
-                            });
-                            document.dispatchEvent(event);
                             this.draw();
                         }
                     }, this);
@@ -311,8 +273,7 @@ goog.scope(function()
             }, this);
         },
 
-        _settingSixthPointResizing:function()
-        {
+        _settingSixthPointResizing:function() {
             this._resizePointsList[5].onmousedown = goog.bind(function(e){
                 var shape = null;
                 for (var i = 0; i != this._viewList.length; ++i) {
@@ -331,12 +292,6 @@ goog.scope(function()
                             shape.setSize(new goog.math.Size(width, shape.getSize().height));
                             goog.style.setSize(this._contour, new goog.math.Size(width, shape.getSize().height));
                             this.setPositionResizePoints(shape);
-                            var event = new CustomEvent(ispring.shapes.EventType.RESIZE_RIGHT_VIEW, {
-                                "detail": {
-                                    "shape": shape
-                                }
-                            });
-                            document.dispatchEvent(event);
                             this.draw();
                         }
                     }, this);
@@ -356,8 +311,7 @@ goog.scope(function()
         },
 
         /**@private*/
-        _settingSeventhPointResizing:function()
-        {
+        _settingSeventhPointResizing:function() {
             this._resizePointsList[6].onmousedown = goog.bind(function(e){
                 var shape = null;
                 for (var i = 0; i != this._viewList.length; ++i) {
@@ -375,12 +329,6 @@ goog.scope(function()
                         shape.setSize(new goog.math.Size(shape.getSize().width, height));
                         goog.style.setSize(this._contour, new goog.math.Size(shape.getSize().width, height));
                         this.setPositionResizePoints(shape);
-                        var event = new CustomEvent(ispring.shapes.EventType.RESIZE_RIGHT_VIEW, {
-                            "detail": {
-                                "shape": shape
-                            }
-                        });
-                        document.dispatchEvent(event);
                         this.draw();
                     }
                 }, this);
@@ -399,8 +347,7 @@ goog.scope(function()
         },
 
         /**@private*/
-        _settingEighthPointResizing:function()
-        {
+        _settingEighthPointResizing:function() {
             this._resizePointsList[7].onmousedown = goog.bind(function(e){
                 var shape = null;
                 for (var i = 0; i != this._viewList.length; ++i) {
@@ -420,12 +367,6 @@ goog.scope(function()
                         goog.style.setPosition(this._contour, new goog.math.Coordinate(e.pageX, shape.getPosition().y));
                         goog.style.setSize(this._contour, new goog.math.Size(width, shape.getSize().height));
                         this.setPositionResizePoints(shape);
-                        var event = new CustomEvent(ispring.shapes.EventType.RESIZE_RIGHT_VIEW, {
-                            "detail": {
-                                "shape": shape
-                            }
-                        });
-                        document.dispatchEvent(event);
                         this.draw();
                     }
                 }, this);
@@ -445,44 +386,27 @@ goog.scope(function()
 
         /**
          * @public
-         * @returns {!Element|*}
-         */
-        getBody:function()
-        {
-            return this._body;
-        },
-
-        /**
-         * @public
          * @param detail
          */
-        addView:function(detail)
-        {
+        addView:function(detail) {
             var view;
             if (detail.type == "rectangle") {
                 view = new ispring.shapes.RectangleView(detail.key);
             }
-            else if(detail.type == "circle")
-            {
+            else if(detail.type == "circle") {
                 view = new ispring.shapes.CircleView(detail.key);
             }
             goog.array.insert(this._viewList, view);
             this.draw();
         },
 
-
-        moveShape:function(detail)
+        /**
+         * @public
+         * @returns {number}
+         */
+        getNumberVariableShape:function()
         {
-            for(var i = 0; i != this._viewList.length; ++i)
-            {
-                var shape = this._viewList[i];
-                if (detail.key == shape.getKey())
-                {
-                    shape.setPosition(detail.position);
-                    shape.setSize(detail.size);
-                }
-            }
-            this.draw();
+            return this._numberVariableShape;
         },
 
         /**
@@ -490,30 +414,28 @@ goog.scope(function()
          * @param key
          * @returns {number|*|goog.math.Coordinate|Array|goog.positioning.AbstractPosition|!goog.math.Coordinate}
          */
-        getShapeByIndex:function(key)
-        {
+        getShapeByIndex:function(key) {
             for (var i = 0; i != this._viewList.length; ++i) {
-                if (key == this._viewList[i].getKey())
-                {
+                if (key == this._viewList[i].getKey()) {
                     return this._viewList[i];
                 }
             }
         },
 
-        getContour:function()
-        {
-            return this._contour;
+        /**
+         * @public
+         * @returns {!Element}
+         */
+        getBody:function() {
+            return this._body;
         },
-
 
         /**
          * @public
          */
-        draw:function()
-        {
+        draw:function() {
             var background = "";
-            for(var i = 0; i != this._viewList.length; ++i)
-            {
+            for(var i = 0; i != this._viewList.length; ++i) {
                 var view = this._viewList[i];
                 var position = null;
                 var size = null;
@@ -523,15 +445,13 @@ goog.scope(function()
                     size = view.getSize().width + "px " + view.getSize().height + "px";
                     background += "linear-gradient(-45deg, #ba3e23, #f7941e) " + position + " / " + size;
                 }
-                else if (view.getType() == "circle")
-                {
-                    position = (view.getPosition().x - ispring.shapes.LeftView.INDENT - this._width / 2 + view.getSize().width / 2) + "px " +
-                        (view.getPosition().y - ispring.shapes.LeftView.TOP - this._height / 2 + view.getSize().height / 2) + "px";
-                    background += "radial-gradient(circle closest-side, " + " #333 " +  view.getRadius() + "px, white 1px, white 5px, transparent 6px)"
-                        + position;
+                else if (view.getType() == "circle") {
+                    position = (view.getPosition().x - ispring.shapes.LeftView.INDENT) + "px " +
+                        (view.getPosition().y - ispring.shapes.LeftView.TOP) + "px";
+                    background += "radial-gradient(ellipse closest-side at " + "" +  view.getSize().width / 2 + "px "
+                        + view.getSize().height / 2 + "px, blue, blue, blue, blue, blue, transparent)" + position;
                 }
-                if (i + 1 != this._viewList.length)
-                {
+                if (i + 1 != this._viewList.length) {
                     background += ", ";
                 }
             }
@@ -541,66 +461,73 @@ goog.scope(function()
 
         /**
          * @public
+         * @param shape
          */
-        removeLastShape:function()
-        {
-            this._viewList.splice(this._viewList.length - 1);
-            this.draw();
-        },
-
-        redraw:function(e) {
+        removeShape:function(shape) {
             for (var i = 0; i != this._viewList.length; ++i)
             {
-                if (e.shape.getKey() == this._viewList[i].getKey())
+                if (shape.getKey() == this._viewList[i].getKey())
                 {
-                    this._viewList[i].setPosition(e.shape.getPosition());
-                    this._viewList[i].setSize(e.shape.getSize());
+                    this._viewList.splice(i, 1);
+                    break;
                 }
             }
             this.draw();
         },
 
-        checkOutputAbroad:function(position, shapeSize)
-        {
+        redraw:function(e) {
+            for (var i = 0; i != this._viewList.length; ++i) {
+                if (e.shape.getKey() == this._viewList[i].getKey()) {
+                    this._viewList[i].setPosition(e.shape.getPosition());
+                    this._viewList[i].setSize(e.shape.getSize());
+                    break;
+                }
+            }
+            this.draw();
+        },
+
+        checkOutputAbroad:function(position, shapeSize) {
             return ((position.x >= this._position.x) && (position.x + shapeSize.width <= this._position.x + this._width) &&
             (position.y >= this._position.y) && (position.y + shapeSize.height <= this._position.y + this._height));
 
         },
 
-        checkOutputAbroadForResize:function(position)
-        {
+        checkOutputAbroadForResize:function(position) {
             return ((position.x >= this._position.x) && (position.x <= this._position.x + this._width) &&
             (position.y >= this._position.y) && (position.y <= this._position.y + this._height));
 
         },
 
-        chooseShape:function(shape)
-        {
+        chooseShape:function(shape) {
             this._isShapeSelected = true;
             this._numberVariableShape = shape.getKey();
+            this._viewList.splice(0, 0, shape);
+            for(var i = 1; i != this._viewList.length; ++i) {
+                if(shape.getKey() == this._viewList[i].getKey()) {
+                    this._viewList.splice(i, 1);
+                    break;
+                }
+            }
             goog.style.setPosition(this._contour, shape.getPosition());
             goog.style.setSize(this._contour, shape.getSize());
             var size = ispring.shapes.LeftView.SIZE_RESIZE_POINT;
-            for(var i = 0; i != this._resizePointsList.length; ++i)
-            {
+            for(var i = 0; i != this._resizePointsList.length; ++i) {
                 var point = this._resizePointsList[i];
                 goog.style.setSize(point, size);
             }
 
             this.setPositionResizePoints(shape);
+            this.draw();
         },
 
-        getShapeSelected:function()
-        {
+        getShapeSelected:function() {
             return this._isShapeSelected;
         },
 
-        deselectedShape:function()
-        {
+        deselectedShape:function() {
             goog.style.setPosition(this._contour, ispring.shapes.LeftView.START_POINT);
             goog.style.setSize(this._contour, ispring.shapes.LeftView.START_SIZE);
-            for (var i = 0; i != this._resizePointsList.length; ++i)
-            {
+            for (var i = 0; i != this._resizePointsList.length; ++i) {
                 goog.style.setPosition(this._resizePointsList[i], ispring.shapes.LeftView.START_POINT);
             }
         },
@@ -609,8 +536,7 @@ goog.scope(function()
          * @public
          * @param position
          */
-        setPositionContour:function(position)
-        {
+        setPositionContour:function(position) {
             goog.style.setPosition(this._contour, position);
 
         },
@@ -619,8 +545,7 @@ goog.scope(function()
          * @public
          * @param shape
          */
-        setPositionResizePoints:function(shape)
-        {
+        setPositionResizePoints:function(shape) {
             var size = ispring.shapes.LeftView.SIZE_RESIZE_POINT;
             var shapeSize = shape.getSize();
             goog.style.setPosition(this._resizePointsList[0], new goog.math.Coordinate(shape.getPosition().x - size.width / 2,
